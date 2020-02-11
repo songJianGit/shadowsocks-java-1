@@ -22,6 +22,7 @@ public class CryptFactory {
         crypts.putAll(Rc4Md5Crypt.getCiphers());
         crypts.putAll(Chacha20Crypt.getCiphers());
         crypts.putAll(AesGcmCrypt.getCiphers());
+        crypts.putAll(DeviationCrypto.getCiphers());
     }
 
     public static ICrypt get(String name, String password, boolean forUdp) {
