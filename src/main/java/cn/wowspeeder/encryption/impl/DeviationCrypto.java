@@ -121,9 +121,7 @@ public class DeviationCrypto extends CryptSteamBase {
         }
         for (int i = 0; i < b.length; i++) {
             if (listByte.containsKey(b[i])) {
-                for (int j = 0; j < listByte.size(); j++) {
-                    tb[i] = listByte.get(b[i]);
-                }
+                tb[i] = listByte.get(b[i]);
             } else {
                 tb[i] = b[i];
             }
