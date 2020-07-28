@@ -2,6 +2,7 @@ package cn.wowspeeder.encryption.impl;
 
 import cn.wowspeeder.encryption.CryptSteamBase;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.bouncycastle.crypto.StreamCipher;
 
 import javax.crypto.SecretKey;
@@ -23,6 +24,22 @@ public class DeviationCrypto extends CryptSteamBase {
      * 混淆字符串
      */
     private final static String confusionString = "123456";
+
+    private static Map<Byte, Byte> listByte = Maps.newConcurrentMap();
+
+    static {
+        int length = confusionString.length();
+        if (length >= 2) {
+            if (length % 2 != 0) {
+                length = length - 1;
+            }
+        }
+        List<String> lists = Lists.newArrayList(confusionString.split(""));
+        for (int j = 0; j < length; j += 2) {
+            listByte.put(lists.get(j).getBytes()[0], lists.get(j + 1).getBytes()[0]);
+            listByte.put(lists.get(j + 1).getBytes()[0], lists.get(j).getBytes()[0]);
+        }
+    }
 
     public static Map<String, String> getCiphers() {
         Map<String, String> ciphers = new HashMap<>();
@@ -65,7 +82,6 @@ public class DeviationCrypto extends CryptSteamBase {
         return 0;
     }
 
-
     void process(byte[] in, ByteArrayOutputStream out, boolean encrypt) {
         if (DEVIATION_1.equals(super._name)) {
             int len = in.length;
@@ -100,29 +116,13 @@ public class DeviationCrypto extends CryptSteamBase {
 
     private static byte[] confusion(byte[] b) {
         byte[] tb = new byte[b.length];
-        int length = confusionString.length();
-        if (length < 2) {
+        if (confusionString.length() < 2) {// 混淆字符不足长度
             return b;
-        } else {
-            if (length % 2 != 0) {
-                length = length - 1;
-            }
-        }
-        List<String> lists = Lists.newArrayList(confusionString.split(""));
-        List<Byte> listByte = Lists.newArrayList();
-        for (int j = 0; j < length; j++) {
-            listByte.add(lists.get(j).getBytes()[0]);
         }
         for (int i = 0; i < b.length; i++) {
-            if (listByte.contains(b[i])) {
+            if (listByte.containsKey(b[i])) {
                 for (int j = 0; j < listByte.size(); j++) {
-                    if (b[i] == listByte.get(j).byteValue()) {
-                        if (j % 2 == 0) {
-                            tb[i] = listByte.get(j + 1);
-                        } else {
-                            tb[i] = listByte.get(j - 1);
-                        }
-                    }
+                    tb[i] = listByte.get(b[i]);
                 }
             } else {
                 tb[i] = b[i];
