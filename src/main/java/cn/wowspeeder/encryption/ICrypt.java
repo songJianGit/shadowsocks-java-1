@@ -1,11 +1,6 @@
 package cn.wowspeeder.encryption;
 
-import org.bouncycastle.crypto.InvalidCipherTextException;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
 
 /**
  * crypt 加密
