@@ -1,5 +1,6 @@
 package cn.wowspeeder;
 
+import cn.wowspeeder.config.Constant;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.apache.commons.cli.*;
@@ -32,6 +33,15 @@ public class Application {
             logger.error("not found run type");
         }
 
+        initInfo();
         logger.info("start success!");
+    }
+
+    /**
+     * 初始化一些数据
+     * TODO 需要根据加密类型来判断是否需要初始化一些信息，或者初始化哪些信息
+     */
+    private static void initInfo() {
+        Constant.initListByte();
     }
 }

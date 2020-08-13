@@ -1,5 +1,6 @@
 package cn.wowspeeder.ss;
 
+import cn.wowspeeder.config.Constant;
 import cn.wowspeeder.encryption.impl.DeviationCrypto;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,12 +14,13 @@ import static cn.wowspeeder.encryption.impl.DeviationCrypto.DEVIATION_2;
 public class SpeedTest {
 
     @Test
-    public void testIntToIp() {
+    public void testSpeed() {
         byte[] testCase = "1098765432poiuytrewqlkjhgfdsamnbvcxz".getBytes(StandardCharsets.UTF_8);
-        DeviationCrypto cryptoClient = new DeviationCrypto(DEVIATION_2, "abc123");
-        DeviationCrypto cryptoServer = new DeviationCrypto(DEVIATION_2, "abc123");
+        Constant.initListByte();
+        DeviationCrypto cryptoClient = new DeviationCrypto(DEVIATION_2,"");
+        DeviationCrypto cryptoServer = new DeviationCrypto(DEVIATION_2,"");
         long startTime = System.currentTimeMillis();   //获取开始时间
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             doinfo(testCase, cryptoServer, cryptoClient);
         }
         long endTime = System.currentTimeMillis(); //获取结束时间

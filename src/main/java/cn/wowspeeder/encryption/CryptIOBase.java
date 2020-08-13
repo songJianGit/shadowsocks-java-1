@@ -12,14 +12,12 @@ public abstract class CryptIOBase implements ICrypt {
 
     protected final String _name;
     protected boolean isForUdp;
-    protected String _passWord;
     protected final Lock encLock = new ReentrantLock();
     protected final Lock decLock = new ReentrantLock();
     private static InternalLogger logger = InternalLoggerFactory.getInstance(CryptIOBase.class);
 
     public CryptIOBase(String name, String passWord) {
         _name = name.toLowerCase();
-        _passWord = passWord;
     }
 
     @Override

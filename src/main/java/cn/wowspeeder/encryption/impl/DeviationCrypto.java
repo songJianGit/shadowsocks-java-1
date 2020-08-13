@@ -2,11 +2,9 @@ package cn.wowspeeder.encryption.impl;
 
 import cn.wowspeeder.config.Constant;
 import cn.wowspeeder.encryption.CryptIOBase;
-import com.google.common.collect.Lists;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DeviationCrypto extends CryptIOBase {
@@ -20,33 +18,10 @@ public class DeviationCrypto extends CryptIOBase {
      * 3.不要有重复数字或字母
      * 混淆字符串
      */
-    private static String confusionString = "i1u5q3;8x7/6t9";
-
-    private void initListByte() {
-        if (Constant.listByte.size() != 0) {
-            return;
-        }
-        if (_passWord != null && _passWord != "") {
-            confusionString = super._passWord;
-        }
-        int length = confusionString.length();
-        if (length >= 2) {
-            if (length % 2 != 0) {
-                length = length - 1;
-            }
-        } else {
-            return;
-        }
-        List<String> lists = Lists.newArrayList(confusionString.split(""));
-        for (int j = 0; j < length; j += 2) {
-            Constant.listByte.put(lists.get(j).getBytes()[0], lists.get(j + 1).getBytes()[0]);
-            Constant.listByte.put(lists.get(j + 1).getBytes()[0], lists.get(j).getBytes()[0]);
-        }
-    }
+    public final static String confusionString = "i1u5q3;8x7/6t9";
 
     public DeviationCrypto(String name, String passWord) {
         super(name, passWord);
-        this.initListByte();
     }
 
     public static Map<String, String> getCiphers() {
