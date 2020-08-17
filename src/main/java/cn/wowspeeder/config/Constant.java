@@ -15,7 +15,7 @@ import java.util.Map;
 public class Constant {
     private static InternalLogger logger = InternalLoggerFactory.getInstance(Constant.class);
 
-    public static Map<Byte, Byte> listByte = Maps.newConcurrentMap();// 混淆用的数据
+    public static Map<Byte, Byte> listByte = Maps.newConcurrentMap();// 混淆用的数据缓存
 
     public static void initListByte() {// 初始化混淆数据
         int length = DeviationCrypto.confusionString.length();
@@ -29,6 +29,7 @@ public class Constant {
             Constant.listByte.put(lists.get(j).getBytes()[0], lists.get(j + 1).getBytes()[0]);
             Constant.listByte.put(lists.get(j + 1).getBytes()[0], lists.get(j).getBytes()[0]);
         }
-        logger.info("initListByte deviation");
+        logger.info("initListByte-deviation");
     }
+
 }
